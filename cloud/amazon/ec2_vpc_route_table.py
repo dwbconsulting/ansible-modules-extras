@@ -465,7 +465,7 @@ def create_route_spec(connection, routes, vpc_id):
 def ensure_route_table_present(connection, module):
 
     lookup = module.params.get('lookup')
-    propagating_vgw_ids = module.params.get('propagating_vgw_ids', [])
+    propagating_vgw_ids = module.params.get('propagating_vgw_ids') or []
     route_table_id = module.params.get('route_table_id')
     subnets = module.params.get('subnets')
     tags = module.params.get('tags')
@@ -513,7 +513,7 @@ def ensure_route_table_present(connection, module):
         except EC2ResponseError as e:
             module.fail_json(msg=e.message)
 
-    if propagating_vgw_ids is not None:
+    if propagating_vgw_ids:
         result = ensure_propagation(connection, route_table,
                                     propagating_vgw_ids,
                                     check_mode=check_mode)
