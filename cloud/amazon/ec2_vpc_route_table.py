@@ -310,6 +310,9 @@ def ensure_routes(vpc_conn, route_table, route_specs, propagating_vgw_ids,
         else:
             del routes_to_match[i]
 
+    if propagating_vgw_ids == None:
+        propagating_vgw_ids = []
+
     # NOTE: As of boto==2.38.0, the origin of a route is not available
     # (for example, whether it came from a gateway with route propagation
     # enabled). Testing for origin == 'EnableVgwRoutePropagation' is more
