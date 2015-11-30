@@ -323,7 +323,7 @@ def ensure_routes(vpc_conn, route_table, route_specs, propagating_vgw_ids,
                         if r.gateway_id != 'local'
                         and r.gateway_id not in propagating_vgw_ids]
 
-    changed = routes_to_delete or route_specs_to_create
+    changed = bool(routes_to_delete or route_specs_to_create)
     if changed:
         for route_spec in route_specs_to_create:
             vpc_conn.create_route(route_table.id,
